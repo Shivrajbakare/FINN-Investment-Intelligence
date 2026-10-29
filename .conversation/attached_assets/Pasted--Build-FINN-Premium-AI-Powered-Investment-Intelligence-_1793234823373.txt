@@ -1,0 +1,191 @@
+# Build FINN — Premium AI-Powered Investment Intelligence Dashboard
+
+Act as a senior product designer and frontend engineer. Design and build a polished, production-quality, mobile-first frontend for **FINN**, an AI-powered financial investment intelligence agent for the ENAM Holdings AI Engineer Build Challenge.
+
+The application must demonstrate two core capabilities: **Push Mode** (proactive, prioritized company announcements and alerts) and **Pull Mode** (on-demand company research grounded in primary sources such as annual reports and earnings-call transcripts).
+
+## 1. Design Direction
+
+Create a premium financial intelligence product—not a generic admin dashboard or a typical AI chatbot.
+
+- Visual style: sophisticated institutional investment terminal combined with a modern AI research workspace.
+- Use a warm off-white or light neutral background, dark navy typography, restrained green/red financial indicators, and one distinctive accent color.
+- Use strong typography, consistent spacing, subtle borders, clean cards, tasteful shadows, and restrained animations.
+- Avoid excessive gradients, excessive rounded cards, oversized headings, unnecessary glassmorphism, and repetitive AI-generated dashboard patterns.
+- Make the interface feel deliberately designed by a human product designer.
+- Fully responsive on desktop, tablet, and mobile.
+- Support accessible contrast, keyboard navigation, visible focus states, and browser zoom.
+- Use realistic, clearly labeled financial information. Never fabricate live data, source citations, or claims of real-time analysis.
+
+## 2. Main Application Layout
+
+Build a consistent application shell with:
+- A desktop sidebar containing the FINN logo, Portfolio, Intelligence Feed, Research, and Settings.
+- A compact mobile header and bottom navigation.
+- A contextual page header with the current section, reporting date, and relevant actions.
+- A consistent notification and loading/error-state system.
+- A compact AI assistant entry point for initiating company research.
+
+Use reusable components and a consistent design system rather than independently styling every page.
+
+## 3. Portfolio Dashboard
+
+Create an investment overview that helps an analyst quickly understand what needs attention.
+
+Include:
+- Portfolio value, daily change, and overall performance summary where verified data is available.
+- A portfolio performance chart with selectable time ranges.
+- A holdings table showing company, ticker, latest available price, daily change, and alert status.
+- Sortable holdings and filters for company, sector, and alert severity.
+- Small sparklines or trend indicators where historical data is available.
+- A "Needs Attention" section highlighting unusual movements and significant company events.
+- A clear data timestamp and source/freshness indicator.
+- Useful empty, partial-data, stale-data, and API-error states.
+
+Do not imply that a chart or metric is live if it uses historical, sample, or unavailable data.
+
+## 4. Push Mode — Intelligence Feed
+
+Build a prioritized feed of company announcements and events.
+
+Each announcement card should include:
+- Company name and ticker.
+- Announcement category: earnings, management change, acquisition, regulatory, capital allocation, business update, or other.
+- Priority level with a concise explanation of why it matters.
+- Original publication time and source.
+- A short factual summary.
+- Potential business or investment implications, clearly distinguished from reported facts.
+- An original-source link.
+- Actions to mark as read, save, or open company research.
+
+Provide filters for portfolio company, category, priority, and time window: 24 hours, 3 days, and 7 days.
+
+Add a compact "Daily Intelligence Brief" summarizing the most important events and grouping related announcements. Include a clear distinction between verified announcements and generated interpretation.
+
+If live announcement data is unavailable, show an explicit unavailable or demo state instead of inventing events.
+
+## 5. Pull Mode — Company Research Workspace
+
+This is a core feature and must receive particular attention.
+
+Create a research workspace with:
+- A company/ticker selector.
+- An explicit reporting-period and source-document selector.
+- A research prompt input, such as "Compare management guidance with reported results."
+- A structured research snapshot with these sections:
+  1. Business overview.
+  2. Financial performance.
+  3. Management guidance.
+  4. Risks and management commentary.
+- Key metrics displayed in compact tables or charts when the underlying evidence supports them.
+- Expandable evidence panels showing the document title, reporting period, page number or transcript section, and original-source link.
+- Clear labels distinguishing reported actuals, management guidance, derived calculations, and analyst interpretation.
+- A visible historical-data label when research uses an older reporting period.
+- Loading, unavailable-document, unsupported-company, and insufficient-evidence states.
+
+For the existing Infosys research workflow, provide explicit selection between the verified April 2025 and July 2025 documents. Keep the document identity, reporting period, and citations consistent when users switch between them. Never mix evidence from different periods.
+
+Every material financial claim must be traceable to its source. If the backend does not return evidence for a claim, do not display it as a verified fact.
+
+## 6. Narrative vs. Numbers
+
+Include a dedicated analytical view comparing management commentary with reported financial performance.
+
+Display:
+- Management's stated guidance or outlook.
+- The actual reported result.
+- The comparable previous-period result where available.
+- Absolute and percentage variance, calculated from validated numerical inputs.
+- A concise explanation of the difference, supported by evidence.
+- Source citations for both management commentary and actual results.
+
+Use a comparison table and a simple bar chart or variance visualization where appropriate.
+
+Handle missing values, different currencies, incompatible reporting periods, zero denominators, and unavailable guidance explicitly. Never manufacture a comparison merely to populate the screen.
+
+## 7. Company Detail View
+
+Provide a reusable company profile page with:
+- Company identity, ticker, sector, and portfolio status.
+- Latest verified market information, including its timestamp.
+- Relevant alerts and announcements.
+- Available research documents and reporting periods.
+- Key financial metrics when sourced.
+- Links to open the research workspace for that company.
+
+Ensure that unsupported companies display a clear limitation instead of misleading company-specific content.
+
+## 8. Settings
+
+Build a clean settings page containing:
+- Alert sensitivity thresholds.
+- Notification preferences.
+- Preferred dashboard settings.
+- Data and source preferences, if supported.
+- Clear save, success, validation-error, and loading states.
+
+Settings must persist and be reflected consistently throughout the application. Do not display controls that have no implemented behavior.
+
+## 9. Charts and Data Visualization
+
+Use charts only when they help answer a financial question.
+
+Recommended visualizations:
+- Portfolio performance: line chart.
+- Holdings performance: compact sparklines.
+- Announcement priorities: small summary distribution.
+- Financial performance: revenue and profitability comparison.
+- Guidance versus actuals: grouped bar chart or variance chart.
+
+Use accessible labels, tooltips, appropriate currency and percentage formatting, clear axes, and sensible empty states. Avoid decorative charts with fabricated data.
+
+Use a reliable chart library such as Recharts if compatible with the existing project.
+
+## 10. Technical Implementation
+
+- Use React and Next.js with a clean, reusable component architecture.
+- Use Tailwind CSS or the styling system already present in the project.
+- Use TypeScript if starting a new implementation; preserve the existing language if extending an established codebase.
+- Use a suitable icon library such as Lucide.
+- Create reusable components for metric cards, data tables, charts, announcement cards, source citations, filters, dialogs, and loading states.
+- Centralize API calls in a dedicated client module.
+- Read the backend base URL from environment configuration.
+- Integrate with existing FastAPI endpoints and research APIs where available.
+- Keep API responses and TypeScript interfaces consistent with the actual backend contracts.
+- Handle network failures, HTTP errors, missing fields, and empty responses gracefully.
+- Never expose API keys or secrets in frontend code.
+- If an endpoint is not implemented, provide a clearly labeled unavailable state or isolated demonstration fixture. Never disguise mock data as live information.
+- Include responsive behavior and meaningful accessibility attributes.
+
+## 11. Interaction Quality
+
+The interface must be functional, not merely a static design.
+
+Implement:
+- Navigation between all main sections.
+- Company and document selection.
+- Search and filters.
+- Sorting and time-range controls.
+- Expandable citations and source links.
+- Announcement save/read actions where supported.
+- Settings persistence.
+- Chart tooltips and responsive data tables.
+- Clear loading, success, empty, unavailable, and error states.
+
+Ensure every visible button has a meaningful action. Avoid dead controls and placeholder interactions.
+
+## 12. Delivery Requirements
+
+First inspect the existing project and preserve working backend integrations. If the project already contains components or pages, improve and extend them instead of replacing everything unnecessarily.
+
+Then implement the complete frontend, run the available tests, lint, and production build, and fix any reproducible issues.
+
+At completion, provide:
+- A summary of implemented pages and interactions.
+- The exact command to run the frontend.
+- Required environment variables.
+- The backend endpoints used.
+- Which screens use genuine backend data versus explicitly labeled demo data.
+- Any remaining limitations.
+
+**Final objective:** deliver a visually distinctive, professional, responsive financial intelligence application that clearly demonstrates both proactive Push-mode monitoring and evidence-grounded Pull-mode research. Prioritize correctness, source transparency, and a coherent end-to-end user experience over the number of features.

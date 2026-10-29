@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "FINN Investment Intelligence"
+description = "A responsive investment intelligence workspace for institutional analysts, combining portfolio monitoring, prioritized company events, and source-grounded company research with explicit data provenance."
+version = "1.0.0"
+id = "artifacts/finn-intelligence"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23294
+
+[services.development]
+run = "pnpm --filter @workspace/finn-intelligence run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/finn-intelligence", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/finn-intelligence/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23294"
+BASE_PATH = "/"

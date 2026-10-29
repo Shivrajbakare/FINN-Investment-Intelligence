@@ -1,19 +1,21 @@
-# [Project name]
+# FINN Investment Intelligence
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+An investment intelligence workspace for portfolio monitoring, company-event triage, and source-grounded research.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/finn-intelligence run dev` — run the FINN frontend
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- FINN currently needs no user-supplied environment variables. The only API endpoint available is `/api/healthz`.
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
+- Frontend: React + Vite, TypeScript, Recharts, Lucide, wouter
 - API: Express 5
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
@@ -22,23 +24,28 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/finn-intelligence/` — FINN web application
+- `artifacts/api-server/` — shared Express API; currently exposes only its health check
+- `lib/api-spec/openapi.yaml` — source of truth for generated API contracts
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Keep synthetic portfolio figures and verified historical company evidence visibly distinct.
+- Do not present market prices or announcements as current unless a live provider is connected.
+- Keep every research claim tied to its selected document and reporting period; do not combine periods.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+FINN is a responsive workspace for portfolio overview, prioritized company announcements, Infosys document research, company profiles, and analyst preferences. Historical research includes official April and July 2025 Infosys sources; current market and announcement feeds are not connected.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Prioritize source transparency and correct period/currency comparisons over filling the interface with unsupported claims.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `/api/healthz` reports service health only; it is not a financial-data endpoint.
+- Demo portfolio values are illustrative, not live or verified market data.
 
 ## Pointers
 
